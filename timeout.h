@@ -21,19 +21,10 @@ class Timeout {
 
  private:
   void run() {
-    auto current = std::chrono::steady_clock::now();
-    auto initial = std::chrono::steady_clock::now();
-
-    while (true) {
-      if (current > initial + timeoutInterval) {
-        onTimeOut();
-        if (singleShot)
-          return;
-        current = std::chrono::steady_clock::now();
-        initial = std::chrono::steady_clock::now();
-      }
-      current = std::chrono::steady_clock::now();
-    }
+    std::this_thread::sleep_for(timeoutInterval);
+    onTimeOut();
+    if (singleShot)
+      return;
   }
 
   std::chrono::seconds timeoutInterval;
