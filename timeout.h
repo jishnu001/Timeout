@@ -21,10 +21,12 @@ class Timeout {
 
  private:
   void run() {
-    std::this_thread::sleep_for(timeoutInterval);
-    onTimeOut();
-    if (singleShot)
-      return;
+    while (true) {
+      std::this_thread::sleep_for(timeoutInterval);
+      onTimeOut();
+      if (singleShot)
+        return;
+    }
   }
 
   std::chrono::seconds timeoutInterval;
